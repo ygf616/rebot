@@ -1,0 +1,51 @@
+*** Settings ***
+Suite Setup       Sleep    5 sec
+Library           Selenium2Library
+Library           Screenshot
+
+*** Test Cases ***
+login
+    Open Browser    http://www.iotvms.cn    gc
+    Maximize Browser Window
+    Input Text    xpath=//*[@id="user"]    tzuser
+    Input Text    xpath=//*[@id="password"]    123456
+    Click Button    xpath=/html/body/div/div/div[5]/input
+    Sleep    3
+    ${login1}    Get Text    xpath=/html/body/div[1]/div/h4/span
+    Should Be Equal    ${login1}    tzuser
+
+page1
+    Click Link    xpath=/html/body/div[1]/div/ul/li[1]/a    #第1个页面
+    Click Element    xpath=/html/body/div[2]/div[3]/form/div[1]/div[3]/div/div/div/div/i
+    Click Element    xpath=/html/body/div[2]/div[3]/form/div[1]/div[3]/div/div/div/dl/dd[2]
+    Input Text    xpath=//*[@id="License"]    6
+    ${elescount}    Get Element Count    xpath=//*[@id="License-suggest"]/tr
+    Log    ${elescount}
+    ${Text1}    Get Text    xpath=//*[@id="License-suggest"]/tr/td[2]
+    Log    ${Text1}
+    Click Element    xpath=/html/body/div[2]/div[3]/div[2]
+    Sleep    1
+
+page2
+    Click Link    xpath=/html/body/div[1]/div/ul/li[2]/a    #第2个页面
+    Click Element    xpath=//*[@id="r-result"]/form/div/div/div/div/div/i
+    Click Element    xpath=//*[@id="r-result"]/form/div/div/div/div/dl/dd[12]
+    Click Element    xpath=//*[@id="r-result"]/form/div/div/div/div/div/i
+    Click Element    xpath=//*[@id="r-result"]/form/div/div/div/div/dl/dd[2]
+    Click Button    xpath=/html/body/div[2]/div[3]/div[1]/div[1]/button[1]
+    Take Screenshot    D:\code\ride\Testdemo2
+    Execute Javascript    document.getElementById("daytime").removeAttribute("readonly");document.getElementById('daytime').value='20180729'
+    Sleep    3
+    Click Button    css=#daytime
+    Click Element    css=.layui-laydate-content > table > tbody > tr:nth-child(4) > td:nth-child(7)
+    Click Button    css=#daytime
+    Click Element    xpath=//*[@id="layui-laydate1"]/div[2]/div/span[1]
+    Click Button    css=#daytime
+    Click Element    xpath=//*[@id="layui-laydate1"]/div[1]/div[2]/table/tbody/tr[4]/td[1]
+
+page3
+    Click Link    xpath=/html/body/div[1]/div/ul/li[3]/a    #第3个页面
+    Click Button    xpath=/html/body/div[2]/div[3]/div[3]/div[1]/button[2]
+    Click Button    xpath=/html/body/div[2]/div[3]/div[2]/div/button[2]
+    Sleep    1
+    Close All Browsers
